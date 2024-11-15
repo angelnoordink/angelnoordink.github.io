@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Important Reminder</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #81d4fa 0%, #e3f2fd 100%);
+            color: #333;
+            overflow: hidden;
+        }
+        #game-container {
+            width: 320px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease-in-out;
+            animation: float 3s ease-in-out infinite;
+        }
+        #game-container:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            font-size: 1.8em;
+            color: #ff6f00;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 2s ease-out;
+        }
+        
+        #question {
+            font-size: 1.1em;
+            margin: 20px 0;
+            color: #424242;
+        }
+
+        #input, button {
+            font-size: 1em;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            margin-top: 10px;
+            transition: transform 0.2s ease;
+        }
+        
+        #input {
+            width: calc(100% - 20px);
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ff6f00;
+        }
+        
+        button {
+            background: #ff6f00;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #ff8f00;
+            transform: translateY(-2px);
+        }
+        
+        #feedback {
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #d32f2f;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        #monkey {
+            display: none;
+            width: 200px;
+            margin-top: 15px;
+            animation: fadeIn 2s ease-in;
+  			margin-left: auto;
+  			margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>An Important Reminder</h1>
+        <div id="puzzle">
+            <p id="question">Unscramble the word: <strong>MEIT</strong></p>
+            <input type="text" id="input" placeholder="Your answer here">
+            <button onclick="checkAnswer()">Submit</button>
+            <p id="feedback"></p>
+            <img id="monkey" src="https://d3sujgifhk94se.cloudfront.net/wp-content/uploads/2019/07/23084224/Real-coding-langauges.png" alt="Congratulations! Here’s a code monkey!" />
+        </div>
+    </div>
+
+    <script>
+        // Define the sequence of puzzles and answers
+        const puzzles = [
+            { question: "Unscramble the word: MEIT", answer: "time" },
+            { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m" },
+            { question: "What number comes next in the sequence? 2, 4, 8, 16, __?", answer: "32" }
+        ];
+
+        // Set initial puzzle index
+        let puzzleIndex = 0;
+
+        // Function to check the answer
+        function checkAnswer() {
+            const userAnswer = document.getElementById("input").value.toLowerCase();
+            const feedback = document.getElementById("feedback");
+
+            // Check if the answer is correct
+            if (userAnswer === puzzles[puzzleIndex].answer) {
+                feedback.textContent = "Correct!";
+                feedback.style.color = "#4caf50";
+                puzzleIndex++; // Move to next puzzle
+                document.getElementById("input").value = ""; // Clear input field
+
+                // Check if there are more puzzles
+                if (puzzleIndex < puzzles.length) {
+                    document.getElementById("question").textContent = puzzles[puzzleIndex].question;
+                } else {
+                    // All puzzles solved, reveal the message and monkey image
+                    document.getElementById("question").textContent = "Congratulations! Your reminder is:";
+                    feedback.textContent = "Don't forget to log your time in TAStK!";
+                    feedback.style.color = "#1976d2";
+                    document.getElementById("input").style.display = "none";
+                    document.querySelector("button").style.display = "none";
+                    document.getElementById("monkey").style.display = "block"; // Show monkey image
+                }
+            } else {
+                feedback.textContent = "Try again!";
+                feedback.style.color = "#d32f2f";
+            }
+        }
+    </script>
+</body>
+</html>
